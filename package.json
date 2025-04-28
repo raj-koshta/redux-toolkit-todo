@@ -1,5 +1,6 @@
 {
   "name": "redux-toolkit",
+  "homepage": "https://raj-koshta.github.io//redux-toolkit/todo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -7,7 +8,9 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "bun run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@redux-devtools/extension": "^3.3.0",

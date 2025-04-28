@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { MdDeleteForever } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux'
-import { addTask, deleteTask, fetchTask, clearAllTask } from '../store';
+import { addTask, deleteTask, clearAllTask } from '../features/tasks/tasksSlice';
+import { fetchTask } from '../features/tasks/tasksSlice';
 
 const Todo = () => {
 
@@ -57,7 +58,7 @@ const Todo = () => {
                 </form>
             </div>
 
-            <div style={{display: "flex",justifyContent: "space-around"}}>
+            <div style={{display: "flex",justifyContent: "space-around", marginBottom: "25px"}}>
                 <button onClick={handleFetchTask}>Fetch API Tasks</button>
                 <button onClick={handleClearAllTask}>Clear All Task</button>
             </div>

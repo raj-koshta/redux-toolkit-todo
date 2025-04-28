@@ -1,69 +1,13 @@
 // import { applyMiddleware, createStore } from "redux"
 // import { composeWithDevTools } from '@redux-devtools/extension';
 // import { thunk } from "redux-thunk";
-import { configureStore, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
-
-// const ADD_TASK = "task/add"
-// const DELETE_TASK = "task/delete"
-// const FETCH_TASKS = "task/fetch"
-
-// creating initial state
-const initialState = {
-    task: [],
-}
+import { configureStore } from "@reduxjs/toolkit";
+import { taskReducer } from "./features/tasks/tasksSlice";
 
 // ------------------------------------ Redux Toolkit ------------------------------
 
 //!------------- NEW WAY ------------------------
 
-export const fetchTask = createAsyncThunk(
-    "task/fetchTasks",
-    async () => {
-        try {
-            const res = await fetch(
-                "https://jsonplaceholder.typicode.com/todos?_limit=3"
-            )
-            const task = await res.json();
-            return task;
-
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-)
-
-
-const taskReducer = createSlice({
-    name: "task",
-    initialState: initialState,
-    reducers: {
-        addTask(state, action) {
-            state.task.push(action.payload);
-        },
-        deleteTask(state, action) {
-            state.task = state.task.filter((curTask, index) => index != action.payload)
-        },
-        clearAllTask(state, action) {
-            state.task = [];
-        }
-    },
-    extraReducers: (builder) => {
-        builder
-        .addCase(fetchTask.pending, (state) => {
-            state.status = 'loading';
-        })
-        .addCase(fetchTask.fulfilled, (state, action) => {
-            state.status = 'succeeded';
-            state.task = [...state.task, ...action.payload.map((curTask) => curTask.title)]; // Replace old tasks with new ones
-        })
-        .addCase(fetchTask.rejected, (state, action) => {
-            state.status = 'failed';
-            state.error = action.error.message;
-        });
-    }
-})
 
 export const store = configureStore({
     reducer: {
@@ -72,26 +16,22 @@ export const store = configureStore({
     },
 })
 
-export const { addTask, deleteTask, clearAllTask} = taskReducer.actions;
 
-store.dispatch(addTask("Buy goods"))
-store.dispatch(addTask("Buy Mango"))
-store.dispatch(addTask("Buy Apple"))
-
-
-
-// -------------------------------------- Redux -------------------------------------------
+// -------------------------------------- Redux ------- OLD way------------------------------------
+// const ADD_TASK = "task/add"
+// const DELETE_TASK = "task/delete"
+// const FETCH_TASKS = "task/fetch"
 
 
 // Step-1 Create reducer for your app
 // const taskReducer = (state = initialState, action) => {
 //     switch (action.type) {
-//         case ADD_TASK:
-//             return {
-//                 ...state,
-//                 task: [...state.task, action.payload]
-//             };
-
+    //         case ADD_TASK:
+    //             return {
+        //                 ...state,
+        //                 task: [...state.task, action.payload]
+        //             };
+        
 //         case DELETE_TASK:
 //             const updatedTask = state.task.filter((curTask, index) => {
 //                 return index != action.payload;
